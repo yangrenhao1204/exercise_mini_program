@@ -1,0 +1,14 @@
+/* pages/subject/subjectList.wxss */
+.list {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.item {
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}

@@ -1,0 +1,37 @@
+<view class="page" data-weui-theme="light">
+    <view class="header"></view>
+    <view class="userinfo">
+        <button wx:if="{{!hasUserInfo}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo"> 获取头像昵称 </button>
+        <block wx:else>
+            <view class="userinfo-avator-wrap">
+                <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            </view>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        </block>
+    </view>
+
+    <view class="body">
+        <block wx:if="{{subjectId == null}}">
+            <navigator class='item' hover-class="navigator-hover" url="/pages/subject/subjectList">
+                选择科目
+            </navigator>
+        </block>
+        <view wx:else>
+            <view>当前科目:{{subjectName}}</view>
+            <view class="type">
+                <span bindtap="switchPage" data-url="/pages/subject/subjectList">
+                    <image class='image' src='/common/images/kemu.png' mode="aspectFit"></image>
+                </span>
+                <span bindtap="switchPage" data-url="/pages/chapter/chapterList">
+                    <image class='image' src='/common/images/zhangjie.png' mode="aspectFit"></image>
+                </span>
+                <span bindtap="switchPage" data-url="/pages/problem/problem?testtype=rand">
+                    <image class='image' src='/common/images/suiji.png' mode="aspectFit"></image>
+                </span>
+                <span bindtap="switchPage" data-url="/pages/problem/problem?testtype=error&pattern=all">
+                    <image class='image' src='/common/images/cuowu.png' mode="aspectFit"></image>
+                </span>
+            </view>
+        </view>
+    </view>
+</view>

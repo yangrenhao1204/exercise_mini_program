@@ -1,0 +1,22 @@
+<view class="finish">
+    <view class="header-wrapper">
+        <view class="header">
+            <view class="title-model">{{subject}}</view>
+        </view>
+    </view>
+    <view class="result-wrapper">
+        <view class="total">您答对了{{total}}道题中的{{right}}道</view>
+        <view class="percentage">正确率为
+            <text class="value">{{percentage}}</text>
+        </view>
+        <scroll-view class="problemListLayer" scroll-y="true">
+            <block wx:for="{{problem.problemList}}">
+                <view class="status {{problem.currentNum === index?'current':''}} {{problem.problemList[index].judgeRes === true?'right':''}} {{problem.problemList[index].judgeRes === false?'error':''}}">{{index+1}}</view>
+            </block>
+        </scroll-view>
+    </view>
+    <view class="btn-wrapper">
+        <view class="title-left header-item btn goHome" bindtap="goHome">去首页</view>
+        <view class="title-right header-item btn goCheckError" bindtap="goCheckError">查看错题</view>
+    </view>
+</view>

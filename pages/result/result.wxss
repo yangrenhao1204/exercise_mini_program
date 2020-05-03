@@ -1,0 +1,109 @@
+.finish{
+	padding:25px 25px;
+
+}
+
+.finish .header-wrapper{
+	display:flex;
+	/* border-bottom: 2px solid black;
+	padding-bottom:3px; */
+}
+
+.finish .header{
+    display:flex;
+	font-size:40px;
+    text-align: center;
+	justify-content: center;
+}
+
+.finish .total{
+	font-size:45rpx;
+	text-align:center;
+	margin-top:85rpx;
+}
+
+.finish .percentage{
+	font-size:45rpx;
+	text-align:center;
+
+}
+
+.finish .percentage.value{
+	color:#ec4370;
+}
+
+.finish .btn-wrapper{
+	margin-top:110rpx;
+	display:flex;
+	padding:0 ;
+	margin-left:20rpx;
+	margin-right:20rpx;
+	justify-content: space-between;
+}
+
+.finish .btn{
+	padding:20rpx;
+	border-radius:5px;
+	width:200rpx;
+	text-align: center;
+}
+
+.finish .goHome{
+	border:1px solid black;
+}
+
+.finish .goCheckError{
+	background-color:#ffb600;
+	color:white;
+}
+
+
+.problemListLayer {
+    max-height: 500rpx;
+    padding: 24rpx 24rpx;
+    /* border: 1rpx solid #eaeaea; */
+    background: #fff;
+    z-index: 100;
+    /* overflow: auto; */
+}
+
+.problemListLayer .status {
+  float: left;
+  width: 98rpx;
+  height: 98rpx;
+  margin: 24rpx 0 0 20rpx;
+  border-radius: 50rpx;
+  border: 1rpx solid #ccc;
+  font-size: 20rpx;
+  line-height: 98rpx;
+  text-align: center;
+  color: #ccc;
+}
+
+.problemListLayer .status.current {
+  color: #999;
+  border-color: #999;
+  background: #f6f6f6;
+}
+
+.problemListLayer .status.right {
+  color: #8f8;
+  border-color: #4c4;
+}
+
+.problemListLayer .status.error {
+  color: #f88;
+  border-color: #c44;
+}
+
+.problemListLayer .status.right.current {
+  color: #6f6;
+  border-color: #6f6;
+  background: #f0fff0;
+}
+
+.problemListLayer .status.error.current {
+  color: #f66;
+  border-color: #f66;
+  background: #fff0f0;
+}

@@ -1,0 +1,5 @@
+<view class="list" wx:for="{{subjectList}}" wx:for-index="index" wx:for-item="subject">
+    <view class="item" bindtap="returnWithSubjectId" data-id="{{subject.id}}">
+        {{subject.name}}
+    </view>
+</view>

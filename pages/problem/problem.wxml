@@ -1,0 +1,3 @@
+<import src="template.wxml" />
+<template is="problemList" data="{{testType, ...problem, animation, layer, isFinish}}" />
+

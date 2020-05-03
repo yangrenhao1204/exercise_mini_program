@@ -1,0 +1,10 @@
+<view wx:if="{{isLoading}}">
+    <image class="loading__icon" src="../../common/images/loading.svg"></image>
+    <view class="title">请稍后</view>
+</view>
+<view wx:else>
+    <view class="title">{{title}}</view>
+    <towxml nodes="{{content}}"/>
+</view>
+
+<button bindtap="chooseChapter">跳过阅读去刷题</button>

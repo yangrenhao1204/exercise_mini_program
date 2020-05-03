@@ -1,0 +1,5 @@
+<view class="list" wx:for="{{chapterList}}" wx:for-index="index" wx:for-item="chapter">
+    <view class="item" bindtap="chooseChapter" data-id="{{chapter.id}}">
+        {{chapter.name}}
+    </view>
+</view>

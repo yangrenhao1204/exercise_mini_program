@@ -1,0 +1,125 @@
+<!-- 渲染选择题目 -->
+<template name="choice">
+    <view class="question-view">
+        <view wx:if="{{problem.type == 'SingleChoice'}}">单选</view>
+        <view wx:if="{{problem.type == 'MultipleChoice'}}">多选</view>
+        <view class="question">{{currentNum+1}}. {{problem.topic}}</view>
+        <view class="answers">
+            <block wx:if="{{problem.options.A}}">
+                <view data-value="A" data-current-num="{{currentNum}}" bindtap="selectItem" class="A answer-item {{problem.userSelect.A}} {{problem.correctAnswerMap.A}}">A.{{problem.options.A}}</view>
+            </block>
+            <block wx:if="{{problem.options.B}}">
+                <view data-value="B" data-current-num="{{currentNum}}" bindtap="selectItem" class="B answer-item {{problem.userSelect.B}} {{problem.correctAnswerMap.B}}">B.{{problem.options.B}}</view>
+            </block>
+            <block wx:if="{{problem.options.C}}">
+                <view data-value="C" data-current-num="{{currentNum}}" bindtap="selectItem" class="C answer-item {{problem.userSelect.C}} {{problem.correctAnswerMap.C}}">C.{{problem.options.C}}</view>
+            </block>
+            <block wx:if="{{problem.options.D}}">
+                <view data-value="D" data-current-num="{{currentNum}}" bindtap="selectItem" class="D answer-item {{problem.userSelect.D}} {{problem.correctAnswerMap.D}}">D.{{problem.options.D}}</view>
+            </block>
+        </view>
+        <block wx:if="{{problem.showExplains===true}}">
+            <view class="answer-msg">
+                正确答案：
+                <block>
+                    {{problem.answer}}
+                </block>
+            </view>
+            <view class="answer-explain" wx:if='{{problem.analysis}}'>
+                答案释义： {{problem.analysis}}
+            </view>
+        </block>
+        <block wx:else>
+            <view class="do-answer" bindtap="doAnswer">确定</view>
+        </block>
+    </view>
+
+</template>
+
+
+
+<!-- 渲染判断题目 -->
+<template name="judgement">
+    <view class="question-view">
+        <view>判断</view>
+        <view class="question">{{currentNum+1}}. {{problem.topic}}</view>
+        <view class="answers">
+            <view data-value="right" data-current-num="{{currentNum}}" bindtap="selectItem" class="answer-item {{problem.userSelect.right}} {{problem.correctAnswerMap.right}}">正确</view>
+            <view data-value="error" data-current-num="{{currentNum}}" bindtap="selectItem" class="answer-item {{problem.userSelect.error}} {{problem.correctAnswerMap.error}}">错误</view>
+        </view>
+        <block wx:if="{{problem.showExplains===true}}">
+            <view class="answer-msg">
+                正确答案：
+                <block wx:if="{{problem.answer === true}}">
+                    正确
+                </block>
+                <block wx:elif="{{problem.answer === false}}">
+                    错误
+                </block>
+            </view>
+            <view class="answer-explain" wx:if='{{problem.analysis}}'>
+                答案释义： {{problem.analysis}}
+            </view>
+        </block>
+        <block wx:else>
+            <view class="do-answer" bindtap="doAnswer">确定</view>
+        </block>
+    </view>
+</template>
+
+
+<!-- 页面题目模板 -->
+<template name="problem">
+    <template wx:if="{{problem.type == 'SingleChoice' || problem.type == 'MultipleChoice'}}" is="choice" data="{{currentNum, problem}}" />
+    <template wx:if="{{problem.type == 'Judgement'}}" is="judgement" data="{{currentNum, problem}}" />
+</template>
+
+
+<!-- 题目选择模层-->
+<template name="problemListLayer">
+    <scroll-view class="problemListLayer" scroll-y="true">
+        <block wx:for="{{problemList}}">
+            <view bindtap="setCurrentProblem" data-current-num="{{index}}" class="status {{currentNum === index?'current':''}} {{problemList[index].judgeRes === true?'right':''}} {{problemList[index].judgeRes === false?'error':''}}">{{index+1}}</view>
+        </block>
+    </scroll-view>
+</template>
+
+
+<!-- 题目展示页面 -->
+<template name="problemList">
+    <view class="header">
+        <view class="title-left header-item"></view>
+        <view wx:if="{{testType == 'order'}}" class="title-center header-item">章节练习</view>
+        <view wx:elif="{{testType == 'rand'}}" class="title-center header-item">乱序刷题</view>
+        <view wx:elif="{{testType == 'error'}}" class="title-center header-item">错题复习</view>
+        <block wx:if="{{isFinish}}">
+            <view class="title-right header-item go-finish" bindtap="goFinish">结束</view>
+        </block>
+        <block wx:else>
+            <view class="title-right header-item"></view>
+        </block>
+    </view>
+    <view wx:if="{{problemListLength == 0}}">
+        没有题目
+    </view>
+    <view class='swipers' bind:touchend='touchEnd' bind:touchstart='touchStart'>
+        <scroll-view scroll-y="true" wx:if="{{currentNum-1 >= 0}}" class='swiperItem previousPage' animation="{{animation.previousPage}}">
+            <template is="problem" data="{{currentNum, problem:problemList[currentNum-1]}}" />
+        </scroll-view>
+        <scroll-view scroll-y="true" wx:if="{{currentNum >= 0 && currentNum < problemListLength}}" class='swiperItem' animation="{{animation.currentPage}}">
+            <template is="problem" data="{{currentNum, problem:problemList[currentNum]}}" />
+        </scroll-view>
+        <scroll-view scroll-y="true" wx:if="{{currentNum+1 < problemListLength}}" class='swiperItem posteriorPage' animation="{{animation.posteriorPage}}">
+            <template is="problem" data="{{currentNum, problem:problemList[currentNum+1]}}" />
+        </scroll-view>
+    </view>
+    <view hidden="{{!layer.isShow}}" class="footer-layer" bindtap="hideProblemListLayer"></view>
+    <view class="footer" animation="{{layer.layerAnimation}}">
+        <view class="count" bindtap='changeProblemListLayerState'>
+            <view class="completion">{{currentNum+1}}/{{problemListLength}}</view>
+            <view class="correct">{{record.right}}</view>
+            <view class="error">{{record.error}}</view>
+        </view>
+        <template is="problemListLayer" data="{{currentNum, problemList}}" />
+    </view>
+</template>

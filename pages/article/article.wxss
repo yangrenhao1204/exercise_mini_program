@@ -1,0 +1,16 @@
+@import '../../towxml/style/main.wxss';
+
+.title {
+    text-align: center;
+}
+
+.content {
+    margin-bottom: 120rpx;
+}
+
+button {
+    width: 100%;
+    height: 100rpx;
+    position: fixed;
+    bottom: 0;
+}
